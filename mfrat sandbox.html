@@ -1,0 +1,298 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>MyAgPlane</title>
+
+    <!--These are the normal server locations-->
+    <!--
+    <link id="switchable_ShortcutIcon" rel="shortcut icon" href="../Content/icons/favicon_mAP.ico" type="image/x-icon"/>
+    <link id="switchable_Icon" rel="icon" href="../Content/icons/favicon_mAP.ico" type="image/x-icon"/>
+    -->
+    <!--Link locations for sandbox-->
+    <link id="switchable_ShortcutIcon" rel="shortcut icon" href="favicon_mAP.ico" type="image/x-icon"/>
+    <link id="switchable_Icon" rel="icon" href="favicon_mAP.ico" type="image/x-icon"/>
+    <!---->
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" /> 
+</head>
+
+<body>
+
+
+    <div>
+        <div>
+            <div class="navbar-fixed">
+                <nav>
+                    <div class="nav-wrapper white">
+                        <a href="#!" class="brand-logo blue-text" id="a_logo">
+                            <img id="switchable_NavLogo" src="webLogo_mAP_288x288.png" style="width: 72px;" /></a>
+                        <a href="#" data-target="sidenav" class="sidenav-trigger" id="btn_SideNavTrigger"><i class="material-icons green-text">menu</i></a>
+                        <ul class="right hide-on-med-and-down">
+                            <li><a href="#" class="blue-text" id="a_nav_Menu">Menu</a></li>
+                            <li><a href="#" class="blue-text" id="a_nav_Dashboard">Dashboard</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+            <ul class="sidenav" id="sidenav">
+                <li><a href="#" class="blue-text" id="a_sidenav_Menu">Menu</a></li>
+                <li><a href="#" class="blue-text" id="a_sidenav_Dashboard">Dashboard</a></li>
+            </ul>
+        </div>
+
+
+        <!--Loader-->
+        <div id="div_Loader" style="margin-top: 40vh; text-align: center;">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-green-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+            <p id="p_LoaderText" style="display: none;"></p>
+        </div>
+        <!--End Loader -->
+
+        <!--Not Authorized Error-->
+        <div id="div_NoAuthError" style="top: 50%; left: 50%; position: fixed; transform: translate(-50%, -50%); display: none; text-align: center;">
+            <p style="color: red;">Sorry, we could not authenticate your account.</p>
+        </div>
+        <!--Not Authorized Error-->
+
+        <!--Main Menu-->
+        <div id="div_MainMenu" style="top: 50%; left: 50%; position: fixed; transform: translate(-50%, -50%); display: none; text-align: center;">
+                <div>
+                    <a id="a_Goto_EntryForm" class="waves-effect waves-light btn blue white-text" style="min-width: 250px;">Create Entry</a>
+                </div>
+                <div style="margin-top:20px;">
+                    <a id="a_Goto_ReviewRecords" class="waves-effect waves-light btn blue white-text" style="min-width: 250px;">Review Records</a>
+                </div>
+        </div>
+        <!--Main Menu-->
+
+        <div id="div_MfratForm" style="display: none; width: 90%; margin: 0 auto; max-width: 800px; min-width:400px; text-align:center;">
+            <h4>MFRAT</h4>
+            <p>Mission Flight Risk Assessment Tool</p>
+            <div class="row">
+                <div class="input-field col s6 offset-s3">
+                    <input placeholder="Airport / Location" id="input_Location" type="text" class="validate" />
+                    <label for="input_Location">Location</label>
+                </div>
+            </div>
+
+            <div>
+                <p id="field_Airplane"></p>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Flight Risk Category</th>
+                        <th style="text-align: center;">Score</th>
+                        <th style="text-align: center;">Max Allowable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;">Weather</td>
+                        <td style="text-align: center;">
+                            <a id="btn_Weather_SUB" class="btn-floating btn-small waves-effect waves-light green white-text"><i class="material-icons">remove</i></a>
+                            <span id="field_Value_Weather" style="margin-left: 10px; margin-right: 10px; font-weight: bold;">0</span>
+                            <a id="btn_Weather_ADD" class="btn-floating btn-small waves-effect waves-light red white-text"><i class="material-icons">add</i></a>
+                        </td>
+                        <td style="text-align: center;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">Aircraft Condition</td>
+                        <td style="text-align: center;">
+                            <a id="btn_AircraftCondition_SUB" class="btn-floating btn-small waves-effect waves-light green white-text"><i class="material-icons">remove</i></a>
+                            <span id="field_Value_AircraftCondition" style="margin-left: 10px; margin-right: 10px; font-weight: bold;">0</span>
+                            <a id="btn_AircraftCondition_ADD" class="btn-floating btn-small waves-effect waves-light red white-text"><i class="material-icons">add</i></a>
+                        </td>
+                        <td style="text-align: center;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">Aircraft Performance</td>
+                        <td style="text-align: center;">
+                            <a id="btn_AircraftPerformance_SUB" class="btn-floating btn-small waves-effect waves-light green white-text"><i class="material-icons">remove</i></a>
+                            <span id="field_Value_AircraftPerformance" style="margin-left: 10px; margin-right: 10px; font-weight: bold;">0</span>
+                            <a id="btn_AircraftPerformance_ADD" class="btn-floating btn-small waves-effect waves-light red white-text"><i class="material-icons">add</i></a>
+                        </td>
+                        <td style="text-align: center;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">Mission Environment</td>
+                        <td style="text-align: center;">
+                            <a id="btn_MissionEnvironment_SUB" class="btn-floating btn-small waves-effect waves-light green white-text"><i class="material-icons">remove</i></a>
+                            <span id="field_Value_MissionEnvironment" style="margin-left: 10px; margin-right: 10px; font-weight: bold;">0</span>
+                            <a id="btn_MissionEnvironment_ADD" class="btn-floating btn-small waves-effect waves-light red white-text"><i class="material-icons">add</i></a>
+                        </td>
+                        <td style="text-align: center;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">Human Factors</td>
+                        <td style="text-align: center;">
+                            <a id="btn_HumanFactors_SUB" class="btn-floating btn-small waves-effect waves-light green white-text"><i class="material-icons">remove</i></a>
+                            <span id="field_Value_HumanFactors" style="margin-left: 10px; margin-right: 10px; font-weight: bold;">0</span>
+                            <a id="btn_HumanFactors_ADD" class="btn-floating btn-small waves-effect waves-light red white-text"><i class="material-icons">add</i></a>
+                        </td>
+                        <td style="text-align: center;">5</td>
+                    </tr>
+
+                    <tr style="display:none;">
+                        <td>Total</td>
+                        <td id="field_TotalScore"></td>
+                        <td>
+                            <p>>21 = NO GO</p>
+                            <p>16-21 = ASK FIRST</p>
+                            <p><16 GO</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="totalBar_Outer" style="width: 100%; border: 1px solid gray; border-radius:5px;">
+                <div id="totalBar_Inner" style="width: 5%; height: 30px; background-color: green; line-height:2; font-weight:bolder;"></div>
+            </div>
+           <div>
+                <p>>21 = NO GO</p>
+                <p>16-21 = ASK FIRST</p>
+                <p><16 GO</p>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="input_Remarks" class="materialize-textarea" data-length="120"></textarea>
+                    <label for="input_Remarks">Remarks</label>
+                </div>
+            </div>
+
+
+            <div style="margin-top:20px;">
+                <a id="a_SaveButton" class="waves-effect waves-light btn blue white-text" style="min-width: 150px;">Save</a>
+            </div>
+            <!--
+            <div style="margin-top: 20px;">
+                <a id="a_Back" class="waves-effect waves-light btn white blue-text" style="min-width: 150px;">Back</a>
+            </div>-->
+        </div>
+
+        <div id="div_MfratList"  style="display: none; width: 90%; margin: 0 auto; max-width: 800px; min-width:400px; text-align:center;">
+            <h4>Saved MFRAT Records</h4>
+
+            <div id="div_SavedRecordsTable"></div>
+            <a id="a_MfratList_BackBtn" class="waves-effect waves-light btn white blue-text" style="min-width: 250px;">Back</a>
+        </div>
+
+        <div id="div_MfratDisplay" style="display: none; width: 90%; margin: 0 auto; max-width: 800px; min-width: 400px; text-align: center;">
+            <h4>Saved MFRAT</h4>
+            <p id="field_MfratDisplay_Location"></p>
+            <p id="field_MfratDisplay_Date"></p>
+            <p id="field_MfratDisplay_Airplane"></p>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: center;">Flight Risk Category</th>
+                        <th style="text-align: center;">Score</th>
+                        <th style="text-align: center;">Max Allowable</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;">Weather</td>
+                        <td id="field_MfratDisplay_Weather"></td>
+                        <td style="text-align:center;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">Aircraft Condition</td>
+                        <td id="field_MfratDisplay_AircraftCondition"></td>
+                        <td style="text-align:center;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">Aircraft Performance</td>
+                        <td id="field_MfratDisplay_AircraftPerformance"></td>
+                        <td style="text-align:center;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">Mission Environment</td>
+                        <td id="field_MfratDisplay_MissionEnvironment"></td>
+                        <td style="text-align:center;">5</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;">Human Factors</td>
+                        <td id="field_MfratDisplay_HumanFactors"></td>
+                        <td style="text-align:center;">5</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Remarks:</p>
+            <p id="field_MfratDisplay_Remarks"></p>
+            <p id="field_MfratDisplay_TotalScore" style="font-weight:bold; font-size:1.5rem;"></p>
+
+            <a id="a_MfratDisplay_BackBtn" class="waves-effect waves-light btn white blue-text" style="min-width: 250px;">Back</a>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--External Libraries-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.1/c3.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.1/c3.min.js"></script>
+    <!--External Libraries-->
+
+
+    <!--Dev Scripts-->
+    <script src="./src/AgMfrat_App.js"></script>
+    <!--Dev Scripts-->
+
+    <!--This is actually saved in the root folder of the server-->
+    <!--copied locally here for sandbox purposes-->
+    <script src="NavLogoSwitcher.js"></script>
+    <!---->
+
+
+    <!--The site usually uses local storage data to login-->
+    <!--fake it here for sandbox, this is for my testing account so it shouldn't matter much if bad data gets saved or something-->
+    <script>
+        localStorage.setItem("AgMfrat",'{"passwordHash":"9qJYontfg9odfJp8r2C1TA==","accountEmail":"mark.b.nichols@gmail.com","airplane":{"RegistrationNumber":"N212DA","SerialNumber":"802A-0212","AircraftType":"AT-802A","EngineType":"PT6A-67F","AirplaneUniqueId":"Q_CdqUw3K45Q","LiquidUnits":"GAL","DisplayColor":"GREEN","AirplaneName":"Fireboss"}}');
+    </script>
+
+    <script>
+        //document.getElementById("div_Loader").style.display = "none";
+        //document.getElementById("div_MfratForm").style.display = "inherit";
+
+        var app = new AgMfrat_App();
+        app.Run();
+    
+    </script>
+</body>
+
+</html>
