@@ -15,11 +15,11 @@ var NavLogoSwitcher = {
 
     SwitchToMfp: function () {
         //Navbar
-        document.getElementById("switchable_NavLogo").src = "/Content/icons/webLogo_mFP_288x288.png";
+        document.getElementById("switchable_NavLogo").src = "content/webLogo_mFP_288x288.png";
 
 
-        document.getElementById("switchable_ShortcutIcon").href = "/favicon.ico";
-        document.getElementById("switchable_Icon").href = "/favicon.ico";
+        document.getElementById("switchable_ShortcutIcon").href = "content/favicon_mAP.ico";
+        document.getElementById("switchable_Icon").href = "content/favicon_mAP.ico";
 
         /*
         let menuBtn = document.getElementById("btn_SideNavTrigger");

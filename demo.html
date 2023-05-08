@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Categories</title>
+
+    <style>
+        #riskCategoriesTable {
+            margin: 100px; /* Adjust this value as needed */
+        }
+    </style>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" /> 
+
+</head>
+<body>
+
+    <table id="riskCategoriesTable">
+    </table>
+
+    <script>
+        const riskCategories = [
+            {
+                id: 'Weather',
+                max: 5,
+                subCategories: [
+                    {
+                        id: 'Is raining?',
+                        max: 5
+                    },
+                    {
+                        id: 'Is pouring?',
+                        max: 5
+                    },
+                ]
+            },
+            {
+                id: 'Aircraft Condition',
+                max: 5,
+                subCategories: [
+                    {
+                        id: 'Is working?',
+                        max: 5
+                    },
+                    {
+                        id: 'Is Broken?',
+                        max: 5
+                    },
+                ]
+            },
+        ];
+
+        const table = document.getElementById('riskCategoriesTable');
+
+        riskCategories.forEach(category => {
+            const row = document.createElement('tr');
+            const cell = document.createElement('td');
+            cell.textContent = category.id;
+            row.appendChild(cell);
+
+            const nestedTable = document.createElement('table');
+            nestedTable.style.marginLeft = '20px';
+
+            category.subCategories.forEach(subCategory => {
+                const subRow = document.createElement('tr');
+
+                const subCellName = document.createElement('td');
+                subCellName.textContent = subCategory.id;
+                subRow.appendChild(subCellName);
+
+                const subCellButtons = document.createElement('td');
+                subCellButtons.innerHTML = `
+                    <a id="btn_${subCategory.id}_SUB" class="btn-floating btn-small waves-effect waves-light green white-text"><i class="material-icons">remove</i></a>
+                    <span id="field_Value_${subCategory.id}" style="margin-left: 10px; margin-right: 10px; font-weight: bold;">0</span>
+                    <a id="btn_${subCategory.id}_ADD" class="btn-floating btn-small waves-effect waves-light red white-text"><i class="material-icons">add</i></a>
+                `;
+                subRow.appendChild(subCellButtons);
+
+                const subCellMax = document.createElement('td');
+                subCellMax.textContent = subCategory.max;
+                subRow.appendChild(subCellMax);
+
+                nestedTable.appendChild(subRow);
+            });
+
+            const nestedTableCell = document.createElement('td');
+            nestedTableCell.colSpan = 2;
+            nestedTableCell.appendChild(nestedTable);
+
+            row.appendChild(nestedTableCell);
+            table.appendChild(row);
+        });
+    </script>
+</body>
+</html>

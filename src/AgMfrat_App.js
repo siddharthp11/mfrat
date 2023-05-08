@@ -1,5 +1,6 @@
-//@ts-check
-
+/**
+ * @property {HTMLInputElement} html_input_Location
+ */
 class AgMfrat_App {
     constructor() {
 
@@ -24,8 +25,7 @@ class AgMfrat_App {
             this._html_div_MfratDisplay
         ];
 
-        /**@type {HTMLInputElement} */
-        this.html_input_Location = (/**@type {HTMLInputElement} */ document.getElementById("input_Location"));
+        this.html_input_Location =document.getElementById("input_Location");
 
         this._html_field_Airplane = document.getElementById("field_Airplane");
 
@@ -51,8 +51,8 @@ class AgMfrat_App {
         //
 
         this._html_field_TotalScore = document.getElementById("field_TotalScore");
-        /**@type {HTMLInputElement} */
-        this._html_input_Remarks = (/**@type {HTMLInputElement} */ document.getElementById("input_Remarks"));
+
+        this._html_input_Remarks = document.getElementById("input_Remarks");
         this._html_a_SaveButton = document.getElementById("a_SaveButton");
 
         this.MfratFormObj = new MfratData();
@@ -289,12 +289,8 @@ class AgMfrat_App {
      */
     _ShowMfratDisplay = (mfrat) => {
         this._HideAllMainDisplayDivs();
-
-
-
         document.getElementById("field_MfratDisplay_Location").innerText = mfrat.Location;
         document.getElementById("field_MfratDisplay_Date").innerText = mfrat.RecordDateTime.toLocaleString();
-
         document.getElementById("field_MfratDisplay_Airplane").innerText = mfrat.Airplane.AirplaneName + "  " + mfrat.Airplane.RegistrationNumber + " - " + mfrat.Airplane.SerialNumber;
         document.getElementById("field_MfratDisplay_Weather").innerText = mfrat.mfratItem_Weather.CurrentValue.toFixed();
         document.getElementById("field_MfratDisplay_AircraftCondition").innerText = mfrat.mfratItem_AircraftCondition.CurrentValue.toFixed();
@@ -554,7 +550,7 @@ class AgMfrat_App {
                         }
                     }
                     catch (ex) {
-
+                        console.log(ex);
                         this._SaveToDb_Failure();
                     }
                 }
